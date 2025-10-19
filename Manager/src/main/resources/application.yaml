@@ -1,0 +1,6 @@
+server:
+  port: 8081
+grpc:
+  server:
+    enabled: false
+    port: 50051
