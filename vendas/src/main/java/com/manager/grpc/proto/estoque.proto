@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package estoque;
+option java_package = "com.manager.estoque.grpc";
+option java_multiple_files = true;
+
+service EstoqueService {
+    rpc ConsultarEstoque(ConsultaEstoqueRequest) returns (EstoqueResponse);
+    rpc AtualizarEstoque(AtualizaEstoqueRequest) returns (EstoqueResponse);
+    rpc ListarTodosEstoques(ListaEstoquesRequest) returns (ListaEstoquesResponse);
+}
+
+message ConsultaEstoqueRequest {
+    string produto_id = 1;
+}
+
+message AtualizaEstoqueRequest {
+    string produto_id = 1;
+    int32 quantidade = 2;
+    string operacao = 3;
+}
+
+message ListaEstoquesRequest {
+    // Vazio por enquanto
+}
+
+message EstoqueResponse {
+    string produto_id = 1;
+    string nome = 2;
+    int32 quantidade = 3;
+    double preco = 4;
+    string status = 5;
+    bool sucesso = 6;
+    string mensagem = 7;
+}
+
+message ListaEstoquesResponse {
+    repeated EstoqueResponse produtos = 1;
+    int32 total_produtos = 2;
+    bool sucesso = 3;
+}
