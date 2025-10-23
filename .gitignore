@@ -1,3 +1,10 @@
 .idea
 *.iml
 *.class
+anotations.txt
+estoque/target
+Estoque/target
+financeiro/target
+manager/target
+rh/target
+vendas/target

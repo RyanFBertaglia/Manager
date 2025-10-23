@@ -1,0 +1,51 @@
+services:
+
+  dados_estoque:
+    image: postgres:15-alpine
+    container_name: dados_estoque
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=estoque
+    networks:
+      - manager
+    volumes:
+      - estoque_data:/var/lib/postgresql/data
+      - ./init-resources:/docker-entrypoint-initdb.d:ro
+
+    restart: always
+
+
+  estoque:
+    image: estoque
+    container_name: estoque
+    ports:
+      - "8080:8080"
+    networks:
+      - manager
+    volumes:
+      - estoque_data:/data
+    restart: always
+
+  manager:
+    image: manager
+    container_name: manager
+    ports:
+      - "8081:8081"
+    depends_on:
+      - estoque
+    networks:
+      - manager
+    volumes:
+      - manager_data:/data
+    restart: always
+
+networks:
+  manager:
+    driver: bridge
+
+volumes:
+  estoque_data:
+  manager_data:
