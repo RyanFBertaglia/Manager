@@ -11,11 +11,12 @@ service EstoqueService {
 }
 
 message ConsultaEstoqueRequest {
-  string produto_id = 1;
+  int32 produto_id = 1;
 }
 
+
 message AtualizaEstoqueRequest {
-  string produto_id = 1;
+  int32 produto_id = 1;
   int32 quantidade = 2;
   string operacao = 3;
 }
@@ -32,7 +33,7 @@ message ListaEstoquesResponse {
 }
 
 message EstoqueResponse {
-  string produto_id = 1;
+  int32 produto_id = 1;
   string nome = 2;
   int32 quantidade = 3;
   double preco = 4;

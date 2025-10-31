@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_package = "com.manager.vendas";
+option java_multiple_files = false;
+option java_outer_classname = "VendasProto";
+
+service VendasService {
+    rpc ConsultarVenda(ConsultaVendaRequest) returns (VendaResponse);
+    rpc ListarTodosVendas(ListaVendasRequest) returns (ListaVendasResponse);
+    rpc Vender(VendaRequest) returns (VendaResponse);
+}
+
+message ConsultaVendaRequest {
+    int32 venda_id = 1;
+    string cliente_id = 2;
+    string produto_id = 3;
+}
+
+message VendaRequest {
+    int32 venda_id = 1;
+    string cliente_id = 2;
+    string produto_id = 3;
+    int32 quantidade = 4;
+    double preco = 5;
+    int32 vendedor_id = 6;
+    double desconto = 7;
+}
+
+message VendaResponse {
+    int32 venda_id = 1;
+    string cliente_id = 2;
+    string produto_id = 3;
+    int32 quantidade = 4;
+    double preco = 5;
+    string status = 6;
+    bool sucesso = 7;
+    string mensagem = 8;
+}
+
+message ListaVendasRequest {}
+
+message ListaVendasResponse {
+    repeated VendaResponse vendas = 1;
+    int32 total_vendas = 2;
+    bool sucesso = 3;
+    string mensagem = 4;
+}
