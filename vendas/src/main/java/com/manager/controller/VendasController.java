@@ -33,7 +33,8 @@ public class VendasController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest, List<OrderDetailsRequestDTO> orderDetails) {
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
+        List<OrderDetailsRequestDTO> orderDetails = orderRequest.orderDetails();
         orderDetails.forEach(orderDetail ->
                 estoqueService.disponibilidade(orderDetail.productId(), orderDetail.quantity()));
 
