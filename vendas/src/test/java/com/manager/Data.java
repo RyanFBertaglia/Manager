@@ -27,7 +27,7 @@ public class Data {
     }
 
     public Date generateDate() {
-        return new Date(new java.util.Date().getTime());
+        return new Date(System.currentTimeMillis());
     }
 
     public OrderRequest generateOrderRequest() {
@@ -44,7 +44,8 @@ public class Data {
                 "Anytown",
                 "Region",
                 "12345",
-                "Country"
+                "Country",
+                generateOrderDetail()
         );
     }
 
