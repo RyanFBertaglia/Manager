@@ -36,6 +36,7 @@ public class Product {
                 .setProdutoId(id)
                 .setNome(name)
                 .setQuantidade(unitsInStock)
+                .setPreco(unitPrice)
                 .setStatus(status)
                 .setSucesso(sucesso)
                 .setMensagem(mensagem)
