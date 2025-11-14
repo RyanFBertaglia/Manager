@@ -1,0 +1,30 @@
+{
+  "name": "Serviços - Dependências e Endpoints",
+  "lists": [
+    {
+      "name": "Serviços e Suas Dependências",
+      "cards": [
+        {
+          "name": "🛒 Vendas",
+          "desc": "- Estoque: GET /products/{id} → tabelas: products, categories, suppliers\n- RH: GET /employees/{id} → tabelas: employees, territories, employee_territories\n- Financeiro: POST /payments/validate → tabelas: transactions, payments\n- Manager: gRPC notifyOrderCreated(orderId) → logs para auditoria e relatórios"
+        },
+        {
+          "name": "📦 Estoque",
+          "desc": "- Não consome dados de outros serviços inicialmente\n- Endpoints oferecidos:\n  • GET /products → products, categories, suppliers\n  • GET /products/{id} → products\n  • POST /products → products\n  • PUT /products/{id} → products\n- gRPC: getProductInfo(productId), updateStock(productId, quantityChange)"
+        },
+        {
+          "name": "👥 RH",
+          "desc": "- Não consome dados de outros serviços inicialmente\n- Endpoints oferecidos:\n  • GET /employees → employees, territories, employee_territories\n  • GET /employees/{id} → employees, territories\n  • POST /employees → employees\n  • PUT /employees/{id} → employees\n- gRPC: getEmployeeById(id), notifyEmployeeChange(id)"
+        },
+        {
+          "name": "💰 Financeiro",
+          "desc": "- Vendas: GET /orders/{id} → tabelas: orders, order_details, customers\n- Manager: gRPC sendTransactionLog(transactionId) → auditoria\n- Endpoints oferecidos:\n  • POST /payments → transactions, invoices, payments\n  • GET /payments/{id} → transactions, payments\n  • PUT /payments/{id} → transactions, payments"
+        },
+        {
+          "name": "🧠 Manager",
+          "desc": "- Vendas: gRPC notifyOrderCreated(orderId)\n- Financeiro: gRPC sendTransactionLog(transactionId)\n- RH: gRPC getEmployeeById(id) para relatórios de performance\n- Estoque: gRPC getProductInfo(productId) opcional para relatórios consolidados\n- Endpoints oferecidos:\n  • GET /reports/summary → integra Vendas, Estoque, Financeiro\n  • GET /reports/employees → integra Vendas, RH"
+        }
+      ]
+    }
+  ]
+}
