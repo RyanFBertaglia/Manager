@@ -14,32 +14,48 @@ services:
     volumes:
       - estoque_data:/var/lib/postgresql/data
       - ./init-resources:/docker-entrypoint-initdb.d:ro
-
     restart: always
 
+  dados_vendas:
+    image: postgres:15-alpine
+    container_name: dados_vendas
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=vendas
+    networks:
+      - manager
+    volumes:
+      - ./init-resources:/docker-entrypoint-initdb.d:ro
+      - vendas_data:/var/lib/postgresql/data
+    restart: always
+
+  dados_rh:
+    image: postgres:15-alpine
+    container_name: dados_rh
+    ports:
+      - "5434:5434"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rh
+    networks:
+      - manager
+    volumes:
+      - ./init-resources/rh.sql:/docker-entrypoint-initdb.d/rh.sql:ro
+      - rh_data:/var/lib/postgresql/data
+    restart: always
 
   estoque:
-    image: estoque
+    image: estoque:latest
     container_name: estoque
     ports:
       - "8080:8080"
+      - "9090:9090"
     networks:
       - manager
-    volumes:
-      - estoque_data:/data
-    restart: always
-
-  manager:
-    image: manager
-    container_name: manager
-    ports:
-      - "8081:8081"
-    depends_on:
-      - estoque
-    networks:
-      - manager
-    volumes:
-      - manager_data:/data
     restart: always
 
 networks:
@@ -47,5 +63,7 @@ networks:
     driver: bridge
 
 volumes:
+  vendas_data:
   estoque_data:
+  rh_data:
   manager_data:
