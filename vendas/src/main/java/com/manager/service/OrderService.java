@@ -35,13 +35,10 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new NotFound("Order not found"));
     }
 
-    public void createOrderDetail(List<OrderDetailsRequestDTO> ordersDTO, int orderId) {
-        checkIfOrderDetailExistsOrThrow(orderId);
-
-        ordersDTO.forEach(orderDTO -> {
-            OrderDetail order = OrderDetail.toOrderDetail(orderDTO, orderId);
-            orderDetailRepository.save(order);
-        });
+    public void createOrderDetail(OrderDetailsRequestDTO orderDTO, int orderId) {
+        checkIfOrderExistsOrThrow(orderId);
+        OrderDetail order = OrderDetail.toOrderDetail(orderDTO, orderId);
+        orderDetailRepository.save(order);
     }
 
     public void updateOrderDetail(OrderDetail orderDetail) {
@@ -54,13 +51,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public void deleteOrderDetail(int id) {
-        checkIfOrderDetailExistsOrThrow(id);
-        orderDetailRepository.deleteById(id);
+    public void deleteOrderDetail(int orderId) {
+        checkIfOrderDetailExistsOrThrow(orderId);
+        orderDetailRepository.deleteById(orderId);
     }
 
-    public void checkIfOrderDetailExistsOrThrow(int id) {
-        if(!orderDetailRepository.existsById(id)) {
+    public void checkIfOrderDetailExistsOrThrow(int orderId) {
+        if(!orderDetailRepository.existsById(orderId)) {
             throw new NotFound("OrderDetail not found");
         }
     }

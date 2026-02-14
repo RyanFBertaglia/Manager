@@ -39,5 +39,4 @@ public class OrderDetail {
                 .discount(orderDetailsRequestDTO.discount())
                 .build();
     }
-
 }

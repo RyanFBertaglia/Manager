@@ -34,13 +34,11 @@ public class VendasController {
 
     @PostMapping("/order")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
-        List<OrderDetailsRequestDTO> orderDetails = orderRequest.orderDetails();
-        orderDetails.forEach(orderDetail ->
-                estoqueService.disponibilidade(orderDetail.productId(), orderDetail.quantity()));
 
-        // Divide os pedidos marcando-os com o id da nota
+        OrderDetailsRequestDTO orderDetail = orderRequest.orderDetails();
+        estoqueService.disponibilidade(orderDetail.productId(), orderDetail.quantity());
         int id = orderService.createOrder(orderRequest);
-        orderService.createOrderDetail(orderDetails, id);
+        orderService.createOrderDetail(orderDetail, id);
         return ResponseEntity.ok("Pedido criado");
     }
 
@@ -54,13 +52,13 @@ public class VendasController {
         return ResponseEntity.ok(orderService.findAllOrderDetailsById(id));
     }
 
-    @PutMapping("/order{id}")
+    @PutMapping("/order/{id}")
     public ResponseEntity<String> updateOrderDetail(@PathVariable Integer id, @RequestBody OrderDetail orderDetailsRequestDTO) {
         orderService.updateOrderDetail(orderDetailsRequestDTO);
         return ResponseEntity.ok("Pedido atualizado");
     }
 
-    @DeleteMapping("/order{id}")
+    @DeleteMapping("/order/{id}")
     public ResponseEntity<String> deleteOrderDetail(@PathVariable Integer id) {
         orderService.deleteOrderDetail(id);
         return ResponseEntity.ok("Pedido deletado");
